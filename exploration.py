@@ -1,18 +1,16 @@
-# """
-# This module is a modified version of Arthur Juliani's
-# Deep-RL Agents Q-Exploration (Exploration strategies)
-#
-# https://github.com/awjuliani/DeepRL-Agents/blob/master/Q-Exploration.ipynb
-# awjuliani@gmail.com
-# """
-#
+"""
+This module is a modified version of Arthur Juliani's
+Deep-RL Agents Q-Exploration (Exploration strategies)
+
+https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-7-action-selection-strategies-for-exploration-d3a97b7cceaf
+awjuliani@gmail.com
+"""
+
 from __future__ import division
-import numpy as np
-import random
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 
-#
+
 class Q_Network():
     def __init__(self):
         # These lines establish the feed-forward part of the network used to choose actions
