@@ -6,7 +6,6 @@
 # awjuliani@gmail.com
 # """
 #
-import numpy as np
 from __future__ import division
 import numpy as np
 import random
@@ -42,5 +41,6 @@ class Q_Network():
         def Boltzmann(self):
             Temp = tf.placeholder(shape=None, dtype=tf.float32)
             Q_dist = slim.softmax(self.Q_out / Temp)
+            return Q_dist
 
 
