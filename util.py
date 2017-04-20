@@ -223,3 +223,7 @@ def sign( x ):
     return 1
   else:
     return -1
+
+def flipCoin( p ):
+  r = random.random()
+  return r < p
