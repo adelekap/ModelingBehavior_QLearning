@@ -1,21 +1,21 @@
 
 class WMazeMDP():
     def __init__(self,noReward):
-        self.states = self.states()
+        # self.states = self.states()
         self.actions = ['go_to_f1','go_to_f2','go_to_f3']
         self.start = 'f2'
         self.penalty = noReward
 
-    def states(self):
-        """
-        This returns a list of all possible states
-        """
-        feeders = ['f1','f2','f3']
-        trials = range(1,1501)
-        correctNums = range(0,31)
-        #NEED TO FIX! Doesn't include previous state. Need to find all permutations of allStates
-        allStates = [State(feeder,trial,correct) for feeder in feeders for trial in trials for correct in correctNums]
-        return allStates
+    # def states(self):
+    #     """
+    #     This returns a list of all possible states
+    #     """
+    #     feeders = ['f1','f2','f3']
+    #     trials = range(1,1501)
+    #     correctNums = range(0,31)
+    #     #NEED TO FIX! Doesn't include previous state. Need to find all permutations of allStates
+    #     allStates = [State(feeder,trial,correct,1) for feeder in feeders for trial in trials for correct in correctNums]
+    #     return allStates
 
     def transitionProb(self,state,action,newState):
         """
