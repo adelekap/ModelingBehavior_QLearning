@@ -34,16 +34,28 @@ iterations = parameters['i']
 
 experience ={}
 
-def testRat(rat,state,sess,trial):
+def testRat(rat,state,sess,trial,sessionNum):
     if state.correctOutbound == 30:
-        print 'Performance:{0}%'.format(((float(state.correctOutbound)+float(state.correctInbound))/float(trial))*100)
         return state
     experience[trial] = state
     action = rat.getAction(state)
     newState = sess.nextState(state,action)
-    testRat(rat,newState,sess,trial+1)
+    finalstate = testRat(rat,newState,sess,trial+1,sessionNum)
+    return finalstate
+
+def testing(rat,sessionNum,start):
+    performance = testRat(rat, start, session, 1, sessionNum)
+
+    if sessionNum == iterations:
+        print 'Session {0} Performance:{1}%'.format(sessionNum, ((float(performance.correctOutbound) +
+                                                                  float(performance.correctInbound)) /
+                                                                 float(performance.trial)) * 100)
+    else:
+        print 'Session {0} Performance:{1}%'.format(sessionNum, ((float(performance.correctOutbound) +
+                                                                  float(performance.correctInbound)) /
+                                                                 float(performance.trial)) * 100)
+        testing(rat,sessionNum+1,MDP.State('f2',1,0,0,None,performance.cumReward))
 
 
 
-
-testRat(rat,startState,session,1)
+testing(rat,1,startState)
