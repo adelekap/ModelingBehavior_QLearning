@@ -9,7 +9,7 @@ Main Module for Modeling W-Maze MDP with Q Learning
 args = sys.argv[1:]
 
 def parseArgs(cl):
-    args = {'r':-0.01,'e':0.25,'a':0.4,'i':20}
+    args = {'r':-0.01,'e':0.1,'a':0.5,'i':20}
     for n in range(len(cl)):
         if cl[n] == '-h':
             print ""   #### NEED TO HAVE HELP STATEMENTS
@@ -40,6 +40,7 @@ def testRat(rat,state,sess,trial,sessionNum):
     experience[trial] = state
     action = rat.getAction(state)
     newState = sess.nextState(state,action)
+    rat.update(state,action,newState.cumReward)
     finalstate = testRat(rat,newState,sess,trial+1,sessionNum)
     return finalstate
 

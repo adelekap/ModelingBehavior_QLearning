@@ -69,9 +69,9 @@ class ratAgent():
                 action = self.getPolicy(state)
         return action
 
-    def update(self,state,action,nextState,reward):
+    def update(self,state,action,reward):
         """
         Observes a (s,a,s',r) and updates Q-Value.
         """
         sample = reward + (self.discount * self.getValue(state))
-        self.qValues[(state,action)] = (1 - self.alpha) * self.getQValue(state,action) + self.alpha * sample
+        self.Qvalues[(state,action)] = (1 - self.alpha) * self.getQValue(state,action) + self.alpha * sample

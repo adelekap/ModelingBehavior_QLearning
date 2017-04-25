@@ -6,7 +6,7 @@ class WMazeMDP():
 
 
     def nextState(self,state,action):
-        newreward = state.cumReward - self.penalty
+        newreward = state.cumReward + self.penalty
         if state.location == 'f1':
             if action == 'go_to_f2':
                 return State('f2',state.trial + 1,state.correctOutbound,state.correctInbound+1,state,newreward+1)
@@ -15,13 +15,13 @@ class WMazeMDP():
         if state.location == 'f2':
             if action == 'go_to_f3':
                 st = State('f3',state.trial+1,state.correctOutbound+1,state.correctInbound,state,newreward+1)
-                if self.reward(st) == 1 -self.penalty:
+                if self.reward(st) == 1:
                     return st
                 else:
                     return State('f3',state.trial+1,state.correctOutbound,state.correctInbound,state,newreward)
             if action == 'go_to_f1':
                 st = State('f1',state.trial+1,state.correctOutbound+1,state.correctInbound,state,newreward+1)
-                if self.reward(st) == 1-self.penalty:
+                if self.reward(st) == 1:
                     return st
                 else:
                     return State('f1',state.trial+1,state.correctOutbound,state.correctInbound,state,newreward)
@@ -66,15 +66,15 @@ class WMazeMDP():
         otherwise they receive a negative timestep reward (self.penalty).
         """
         if state.previousState.previousState == None:
-            return 1 - self.penalty
+            return 1
         if state.location == 'f2' and (state.previousState.location == 'f1' or state.previousState.location == 'f3'):
-            return 1 - self.penalty
+            return 1
 
         if state.location == 'f3' and state.previousState.location == 'f2' and state.previousState.previousState.location == 'f1':
-            return 1 - self.penalty
+            return 1
 
         if state.location == 'f1' and state.previousState.location == 'f2' and state.previousState.previousState.location == 'f3':
-            return 1 - self.penalty
+            return 1
 
         else:
             return self.penalty
