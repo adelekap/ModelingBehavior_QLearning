@@ -9,7 +9,7 @@ Main Module for Modeling W-Maze MDP with Q Learning
 args = sys.argv[1:]
 
 def parseArgs(cl):
-    args = {'r':-0.01,'e':0.1,'a':0.5,'i':20}
+    args = {'r':-0.01,'e':.2,'a':0.9,'i':20}
     for n in range(len(cl)):
         if cl[n] == '-h':
             print ""   #### NEED TO HAVE HELP STATEMENTS
@@ -32,15 +32,13 @@ rat = agent.ratAgent(session,parameters['e'],parameters['a'])
 startState= MDP.State('f2',1,0,0,None,0)
 iterations = parameters['i']
 
-experience ={}
 
 def testRat(rat,state,sess,trial,sessionNum):
-    if state.correctOutbound == 30:
+    if sess.termination(state):
         return state
-    experience[trial] = state
     action = rat.getAction(state)
     newState = sess.nextState(state,action)
-    rat.update(state,action,newState.cumReward)
+    rat.update(sess,state,action,sess.reward(newState))
     finalstate = testRat(rat,newState,sess,trial+1,sessionNum)
     return finalstate
 
