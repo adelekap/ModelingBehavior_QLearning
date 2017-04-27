@@ -1,15 +1,19 @@
 import util
 import random
-import learningAgents as l
 
 
-class ratAgent(l.ReinforcementAgent):
-    def __init__(self, mdp, epsilon, alpha, discount =0.8):
+class ratAgent():
+    def __init__(self, mdp, epsilon, alpha, discount =0.8,numTraining = 14):
         self.mdp = mdp
         self.discount = discount
         self.QValues = util.Counter()
         self.epsilon = epsilon
         self.alpha = alpha
+        self.numTraining = int(numTraining)
+        self.episodesSoFar = 0
+        self.accumTrainRewards = 0.0
+        self.accumTestRewards = 0.0
+        self.numTraining = int(numTraining)
 
     def legalActions(self,state):
         if state.location == 'f1':
@@ -80,5 +84,38 @@ class ratAgent(l.ReinforcementAgent):
             self.QValues[(None,state.location,action,nextState.location)] = self.getQValue(state, action) + (
                 self.alpha * (reward + (self.discount * self.getValue(nextState)) - self.getQValue(state, action)))
         else:
-            self.QValues[(state.previousState.location, state.location,action,nextState.location)] = self.getQValue(state, action) + \
-                                                                                                     (self.alpha * (reward + (self.discount * self.getValue(nextState)) - self.getQValue(state, action)))
+            self.QValues[(state.previousState.location, state.location,action,nextState.location)] = \
+                self.getQValue(state, action) + (self.alpha * (reward + (self.discount * self.getValue(nextState)) -
+                                                               self.getQValue(state, action)))
+
+    def observeTransition(self, state, action, nextState, deltaReward):
+        self.episodeRewards += deltaReward
+        self.update(state, action, nextState, deltaReward)
+
+    def startEpisode(self):
+        """
+          Called by environment when new episode is starting
+        """
+        self.lastState = None
+        self.lastAction = None
+        self.episodeRewards = 0.0
+
+    def stopEpisode(self):
+        """
+          Called by environment when episode is done
+        """
+        if self.episodesSoFar < self.numTraining:
+            self.accumTrainRewards += self.episodeRewards
+        else:
+            self.accumTestRewards += self.episodeRewards
+        self.episodesSoFar += 1
+        if self.episodesSoFar >= self.numTraining:
+            # Take off the training wheels
+            self.epsilon = 0.0  # no exploration
+            self.alpha = 0.0  # no learning
+
+    def isInTraining(self):
+        return self.episodesSoFar < self.numTraining
+
+    def isInTesting(self):
+        return not self.isInTraining()

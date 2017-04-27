@@ -6,20 +6,6 @@ http://w3.sista.arizona.edu/~clayton/courses/ai/projects/reinforcement/reinforce
 
 
 class ReinforcementAgent():
-    """
-      Abstract Reinforcemnt Agent: A ValueEstimationAgent
-        which estimates Q-Values (as well as policies) from experience
-        rather than a model
-        What you need to know:
-            - The environment will call
-              observeTransition(state,action,nextState,deltaReward),
-              which will call update(state, action, nextState, deltaReward)
-              which you should override.
-        - Use self.getLegalActions(state) to know which actions
-              are available in a state
-    """
-
-
 
     def observeTransition(self, state, action, nextState, deltaReward):
         """
@@ -72,6 +58,3 @@ class ReinforcementAgent():
         self.accumTrainRewards = 0.0
         self.accumTestRewards = 0.0
         self.numTraining = int(numTraining)
-        self.epsilon = float(epsilon)
-        self.alpha = float(alpha)
-        self.discount = float(gamma)

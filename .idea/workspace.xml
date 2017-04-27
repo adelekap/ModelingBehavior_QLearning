@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b827965-c468-433d-8f82-df2efc614d16" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MDP.py" afterPath="$PROJECT_DIR$/MDP.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/agent.py" afterPath="$PROJECT_DIR$/agent.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/exploration.py" afterPath="$PROJECT_DIR$/exploration.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/learningAgents.py" afterPath="$PROJECT_DIR$/learningAgents.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,8 +35,8 @@
       <file leaf-file-name="agent.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+            <state relative-caret-position="1070">
+              <caret line="101" column="0" lean-forward="true" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -49,51 +47,9 @@
       <file leaf-file-name="learningAgents.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learningAgents.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+            <state relative-caret-position="470">
+              <caret line="45" column="38" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="45" selection-end-column="38" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="random.py" pinned="false" current-in-tab="false">
-        <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/random.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4005">
-              <caret line="274" column="0" lean-forward="false" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="util.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/util.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MDP.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MDP.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1290">
-              <caret line="86" column="42" lean-forward="false" selection-start-line="86" selection-start-column="42" selection-end-line="86" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="qLearning.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/qLearning.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="885">
-              <caret line="59" column="25" lean-forward="false" selection-start-line="59" selection-start-column="25" selection-end-line="59" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -841,16 +797,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/learningAgents.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state relative-caret-position="470">
+          <caret line="45" column="38" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="45" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/agent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+        <state relative-caret-position="1070">
+          <caret line="101" column="0" lean-forward="true" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
