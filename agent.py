@@ -1,9 +1,9 @@
 import util
 import random
-import MDP
+import learningAgents as l
 
 
-class ratAgent():
+class ratAgent(l.ReinforcementAgent):
     def __init__(self, mdp, epsilon, alpha, discount =0.8):
         self.mdp = mdp
         self.discount = discount
@@ -82,4 +82,3 @@ class ratAgent():
         else:
             self.QValues[(state.previousState.location, state.location,action,nextState.location)] = self.getQValue(state, action) + \
                                                                                                      (self.alpha * (reward + (self.discount * self.getValue(nextState)) - self.getQValue(state, action)))
-

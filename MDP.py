@@ -84,7 +84,7 @@ class WMazeMDP():
         This returns whether or not the agent is in a terminal state.
         The only termination state is when the agent reaches 30 correct outbound decisions.
         """
-        return state.correctOutbound == 5
+        return state.correctOutbound == 30
 
 class State():
     def __init__(self,location,trial,correctOutbound,correctInbound,previousState,cumReward):
