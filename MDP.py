@@ -98,8 +98,8 @@ class WMazeMDP():
         """
         return state.correctOutbound == 30
 
-    def getCurrentState(self):
-        return self.state
+    def reset(self):
+        self.state = startState
 
 
 

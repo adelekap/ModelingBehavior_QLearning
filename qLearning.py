@@ -55,11 +55,12 @@ def runEpisode(agent, environment,episode):
     returns = 0
     discount = agent.discount
     totalDiscount = 1.0
+    environment.reset()
     if 'startEpisode' in dir(agent): agent.startEpisode()
     print("BEGINNING EPISODE: " + str(episode) + "\n")
     while True:
 
-        state = environment.getCurrentState()
+        state = environment.state
         action = rat.getAction(state)
 
         # END IF IN A TERMINAL STATE
@@ -76,10 +77,10 @@ def runEpisode(agent, environment,episode):
         # EXECUTE ACTION
         nextState = environment.nextState(state,action)
         reward = environment.reward(nextState)
-        print("Started in state: " + str(state.location) +
-                "\nTook action: " + str(action) +
-                "\nEnded in state: " + str(nextState.location) +
-                "\nGot reward: " + str(reward) + "\n")
+        # print("Started in state: " + str(state.location) +
+        #         "\nTook action: " + str(action) +
+        #         "\nEnded in state: " + str(nextState.location) +
+        #         "\nGot reward: " + str(reward) + "\n")
         # UPDATE LEARNER
         if 'observeTransition' in dir(agent):
             agent.observeTransition(environment,state, action, reward)
