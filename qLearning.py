@@ -1,6 +1,7 @@
 import MDP
 import sys
 import agent
+import plotLearning as learn
 
 """
 Main Module for Modeling W-Maze MDP with Q Learning
@@ -67,6 +68,7 @@ def runEpisode(agent, environment,episode,f):
         actions = agent.legalActions(state)
         if len(actions) == 0:
             print("EPISODE " + str(episode) + " COMPLETE: RETURN WAS " + str(returns) + "\n")
+            f.write('1')
             rat.accumTrainRewards=returns
             return returns
 
@@ -79,9 +81,9 @@ def runEpisode(agent, environment,episode,f):
         reward = environment.reward(nextState)
 
         if reward == 1:
-            f.write('1')
+            f.write('1,')
         else:
-            f.write('0')
+            f.write('0,')
 
         # UPDATE LEARNER
         if 'observeTransition' in dir(agent):
@@ -102,6 +104,7 @@ startState= MDP.State('f2',1,0,0,None,0)
 iterations = parameters['i']
 
 with open('decisions.txt','w') as fi:
+    fi.write('0,')
 
     #testing(rat,1,startState)
 
@@ -118,3 +121,5 @@ with open('decisions.txt','w') as fi:
             print "AVERAGE RETURNS FROM START STATE: "+str((returns+0.0) / iterations)
             print
             print
+
+learn.plot()

@@ -37,14 +37,14 @@ def plot_results(proportions,trialNum,movAvg):
     new_y = interp1d(x1, y1, kind='cubic')(new_x)
 
     plt.plot(new_x,new_y,'--')
-    plt.axis([1,trialNum,0,1])
+    plt.axis([1,trialNum,0,1.1])
     plt.title('Learning Curve')
     plt.xlabel("Cumulative Count of Trials")
     plt.ylabel("Proportion Correct in " + str(movAvg) + "-trial moving window")
     plt.savefig(figureName)
     plt.close()
 
-
-props,trials = prep_data(5)
-plot_results(props,trials,5)
+def plot():
+    props,trials = prep_data(5)
+    plot_results(props,trials,5)
 
