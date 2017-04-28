@@ -95,8 +95,6 @@ def runEpisode(agent, environment,episode,f):
         environment.state = nextState
 
 
-
-
 parameters = parseArgs(sys.argv[1:])
 environment = MDP.WMazeMDP(parameters['r'])
 rat = agent.ratAgent(environment,parameters['e'],parameters['a'])

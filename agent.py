@@ -24,17 +24,18 @@ class ratAgent():
         if state.location == 'f3':
             return ['go_to_f1','go_to_f2']
 
-    def getQValue(self,state,action):
+
+    def getQValue(self,state,newLoc):
         """
         Returns the most recently updated q value
         """
 
         if state.previousState == None:
-            if (None,state.location,action,action[6:8]) not in self.QValues: return 0
-            return self.QValues[(None,state.location,action,action[6:8])]
+            if (None,state.location,newLoc) not in self.QValues: return 0
+            return self.QValues[(None,state.location,newLoc)]
         else:
-            if (state.previousState.location,state.location,action,action[6:8]) not in self.QValues: return 0
-            return self.QValues[(state.previousState.location,state.location,action,action[6:8])]
+            if (state.previousState.location,state.location,newLoc) not in self.QValues: return 0
+            return self.QValues[(state.previousState.location,state.location,newLoc)]
 
     def getValue(self,state):
         """
@@ -43,7 +44,7 @@ class ratAgent():
         legalActions = self.legalActions(state)
         if len(legalActions) == 0:
             return 0.0
-        values = [self.getQValue(state,action) for action in legalActions]
+        values = [self.getQValue(state,action[6:8]) for action in legalActions]
 
         return max(values)
 
@@ -53,7 +54,7 @@ class ratAgent():
         """
         Qs = util.Counter()
         for action in legalActions:
-            Qs[action] = self.getQValue(state,action)
+            Qs[action] = self.getQValue(state,action[6:8])
 
         maxVal = Qs[Qs.argMax()]
         actions = [action for action in legalActions if Qs[action] == maxVal]
@@ -81,13 +82,19 @@ class ratAgent():
         """
         nextState = mdp.nextState(state,action)
 
+        current = state.location
+        next = nextState.location
+
         if state.previousState == None:
-            self.QValues[(None,state.location,action,nextState.location)] = self.getQValue(state, action) + (
-                self.alpha * (reward + (self.discount * self.getValue(nextState)) - self.getQValue(state, action)))
+            self.QValues[(None,current,next)] = self.getQValue(state, next) + (
+                self.alpha * (reward + (self.discount * self.getValue(nextState)) - self.getQValue(state, next)))
+
         else:
-            self.QValues[(state.previousState.location, state.location,action,nextState.location)] = \
-                self.getQValue(state, action) + (self.alpha * (reward + (self.discount * self.getValue(nextState)) -
-                                                               self.getQValue(state, action)))
+            previous = state.previousState.location
+            if previous == 'f3' and current == 'f2' and next == 'f3':
+                print "i hate this"
+            self.QValues[(previous,current,next)] = ((1-self.alpha)*self.getQValue(state,nextState.location))+ \
+                                                    self.alpha*(reward+self.discount*self.getValue(nextState))
         mdp.state = state
 
     def observeTransition(self, environment,state, action, deltaReward):

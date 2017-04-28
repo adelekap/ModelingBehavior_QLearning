@@ -77,15 +77,27 @@ class WMazeMDP():
         The agent receives a reward if they visit a correct feeder in the sequence,
         otherwise they receive a negative timestep reward (self.penalty).
         """
+
         if state.previousState.previousState == None:
             return 1
-        if state.location == 'f2' and (state.previousState.location == 'f1' or state.previousState.location == 'f3'):
+
+        distant = state.previousState.previousState.location
+        past = state.previousState.location
+        current = state.location
+
+        if current == 'f2' and (past == 'f1' or past == 'f3'):
+            if state.previousState.previousState.previousState == None:
+                return 1
+            farfar = state.previousState.previousState.previousState.location
+            if (farfar == past):
+                return -1
+            else:
+                return 1
+
+        if current == 'f3' and past == 'f2' and distant == 'f1':
             return 1
 
-        if state.location == 'f3' and state.previousState.location == 'f2' and state.previousState.previousState.location == 'f1':
-            return 1
-
-        if state.location == 'f1' and state.previousState.location == 'f2' and state.previousState.previousState.location == 'f3':
+        if current == 'f1' and past == 'f2' and distant == 'f3':
             return 1
 
         else:
