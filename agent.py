@@ -91,8 +91,6 @@ class ratAgent():
 
         else:
             previous = state.previousState.location
-            if previous == 'f3' and current == 'f2' and next == 'f3':
-                print "i hate this"
             self.QValues[(previous,current,next)] = ((1-self.alpha)*self.getQValue(state,nextState.location))+ \
                                                     self.alpha*(reward+self.discount*self.getValue(nextState))
         mdp.state = state

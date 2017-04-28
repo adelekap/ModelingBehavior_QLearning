@@ -45,6 +45,6 @@ def plot_results(proportions,trialNum,movAvg):
     plt.close()
 
 def plot():
-    props,trials = prep_data(5)
-    plot_results(props,trials,5)
+    props,trials = prep_data(10)
+    plot_results(props,trials,10)
 
