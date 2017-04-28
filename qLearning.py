@@ -51,7 +51,7 @@ def testing(rat,sessionNum,start):
 
 
 
-def runEpisode(agent, environment,episode):
+def runEpisode(agent, environment,episode,f):
     returns = 0
     discount = agent.discount
     totalDiscount = 1.0
@@ -77,10 +77,12 @@ def runEpisode(agent, environment,episode):
         # EXECUTE ACTION
         nextState = environment.nextState(state,action)
         reward = environment.reward(nextState)
-        # print("Started in state: " + str(state.location) +
-        #         "\nTook action: " + str(action) +
-        #         "\nEnded in state: " + str(nextState.location) +
-        #         "\nGot reward: " + str(reward) + "\n")
+
+        if reward == 1:
+            f.write('1')
+        else:
+            f.write('0')
+
         # UPDATE LEARNER
         if 'observeTransition' in dir(agent):
             agent.observeTransition(environment,state, action, reward)
@@ -98,18 +100,21 @@ environment = MDP.WMazeMDP(parameters['r'])
 rat = agent.ratAgent(environment,parameters['e'],parameters['a'])
 startState= MDP.State('f2',1,0,0,None,0)
 iterations = parameters['i']
-#testing(rat,1,startState)
 
-if iterations > 0:
-    print
-    print "RUNNING", iterations, "EPISODES"
-    print
-returns = 0
-for episode in range(1, iterations+1):
-    returns += runEpisode(rat,environment,episode)
-    rat.episodesSoFar += 1
+with open('decisions.txt','w') as fi:
+
+    #testing(rat,1,startState)
+
     if iterations > 0:
         print
-        print "AVERAGE RETURNS FROM START STATE: "+str((returns+0.0) / iterations)
+        print "RUNNING", iterations, "EPISODES"
         print
-        print
+    returns = 0
+    for episode in range(1, iterations+1):
+        returns += runEpisode(rat,environment,episode,fi)
+        rat.episodesSoFar += 1
+        if iterations > 0:
+            print
+            print "AVERAGE RETURNS FROM START STATE: "+str((returns+0.0) / iterations)
+            print
+            print
