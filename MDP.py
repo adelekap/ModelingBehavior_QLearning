@@ -1,8 +1,20 @@
 
+class State():
+    def __init__(self,location,trial,correctOutbound,correctInbound,previousState,cumReward):
+        self.location = location
+        self.trial = trial
+        self.correctInbound = correctInbound
+        self.correctOutbound = correctOutbound
+        self.previousState = previousState
+        self.cumReward = cumReward
+
+startState = State('f2',1,0,0,None,0)
+
 class WMazeMDP():
-    def __init__(self,noReward):
+    def __init__(self,noReward,state=startState):
         self.actions = ['go_to_f1','go_to_f2','go_to_f3']
         self.penalty = noReward
+        self.state = state
 
 
     def nextState(self,state,action):
@@ -86,14 +98,10 @@ class WMazeMDP():
         """
         return state.correctOutbound == 30
 
-class State():
-    def __init__(self,location,trial,correctOutbound,correctInbound,previousState,cumReward):
-        self.location = location
-        self.trial = trial
-        self.correctInbound = correctInbound
-        self.correctOutbound = correctOutbound
-        self.previousState = previousState
-        self.cumReward = cumReward
+    def getCurrentState(self):
+        return self.state
+
+
 
 
 

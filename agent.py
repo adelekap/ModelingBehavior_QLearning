@@ -13,9 +13,10 @@ class ratAgent():
         self.episodesSoFar = 0
         self.accumTrainRewards = 0.0
         self.accumTestRewards = 0.0
-        self.numTraining = int(numTraining)
 
     def legalActions(self,state):
+        if state.correctOutbound == 30:
+            return []
         if state.location == 'f1':
             return ['go_to_f2','go_to_f3']
         if state.location == 'f2':
@@ -87,10 +88,11 @@ class ratAgent():
             self.QValues[(state.previousState.location, state.location,action,nextState.location)] = \
                 self.getQValue(state, action) + (self.alpha * (reward + (self.discount * self.getValue(nextState)) -
                                                                self.getQValue(state, action)))
+        mdp.state = state
 
-    def observeTransition(self, state, action, nextState, deltaReward):
+    def observeTransition(self, environment,state, action, deltaReward):
         self.episodeRewards += deltaReward
-        self.update(state, action, nextState, deltaReward)
+        self.update(environment,state,action,deltaReward)
 
     def startEpisode(self):
         """
