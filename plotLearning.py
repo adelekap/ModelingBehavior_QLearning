@@ -11,11 +11,18 @@ def prep_data(movAvg):
     normalize = 0
     sum =0
     proportions = []
-    for d in data:
+    for d in range(len(data)):
         normalize += 1
-        sum += int(d)
-        if (normalize == movAvg) or (d == data[len(data) - 1]):
-            proportions.append(float(sum)/float(normalize))
+        if int(data[d]) == 11:
+            sum += 2
+        else:
+            sum += int(data[d])
+        if (normalize == movAvg) or (d == len(data)-1):
+            avg = float(sum) / float(normalize)
+            if avg > 1:
+                proportions.append(1)
+            else:
+                proportions.append(float(sum)/float(normalize))
             normalize =0
             sum = 0
     return (proportions, len(data))
@@ -36,7 +43,8 @@ def plot_results(proportions,trialNum,movAvg):
     new_x = np.linspace(min(x1), max(x1), new_length)
     new_y = interp1d(x1, y1, kind='cubic')(new_x)
 
-    plt.plot(new_x,new_y,'--')
+    line = plt.plot(new_x,new_y,'-')
+    plt.setp(line, linewidth=3, color='purple')
     plt.axis([1,trialNum,0,1.1])
     plt.title('Learning Curve')
     plt.xlabel("Cumulative Count of Trials")
