@@ -2,6 +2,10 @@ import math
 import util
 import random
 
+"""
+This is the possible exploration functions that can be implemented
+by your agent.
+"""
 
 def greedyE(agent,state):
     """
@@ -9,8 +13,7 @@ def greedyE(agent,state):
     which returns a fixed exploration probability
     that the user can specify or the default is 0.1
     """
-    return 0.1
-
+    return agent.epsilon
 
 def decreasingE(agent,state):
     """
@@ -26,6 +29,7 @@ def decreasingE(agent,state):
     b = 1-.0499
     return m*x+b
 
+
 def GLIE(agent,state):
     """
     Greedy in the limit of infinite exploration (GLIE):
@@ -33,6 +37,7 @@ def GLIE(agent,state):
     """
     time = float(agent.episodesSoFar)*100.0+float(state.trial)
     return (1.0/time)
+
 
 def softmax(agent,state):
     """

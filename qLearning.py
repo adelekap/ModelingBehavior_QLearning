@@ -30,8 +30,13 @@ def parseArgs(cl):
             args['e'] = 'softmax'
         if cl[n] == '-eGlie':
             args['e'] = 'glie'
-        if cl[n] == '-a': #alpha
+        if cl[n] == '-aConstant': #alpha
             args['a'] == float(cl[n+1])
+        if cl[n] == '-aLinear':
+            args['a'] = 'linear'
+        if cl[n] == '-aExponential':
+            args['a'] = 'exponential'
+
     return args
 
 
@@ -110,8 +115,6 @@ iterations = parameters['i']
 
 with open('decisions.txt','w') as fi:
     fi.write('0,')
-
-    #testing(rat,1,startState)
 
     if iterations > 0:
         print

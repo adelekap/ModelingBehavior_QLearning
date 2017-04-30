@@ -1,6 +1,7 @@
 import util
 import random
 import exploration as explore
+import learning
 
 
 class ratAgent():
@@ -93,15 +94,16 @@ class ratAgent():
 
         current = state.location
         next = nextState.location
+        alpha = self.alpha(agent,state)
 
         if state.previousState == None:
             self.QValues[(None,current,next)] = self.getQValue(state, next) + (
-                self.alpha * (reward + (self.discount * self.getValue(nextState)) - self.getQValue(state, next)))
+                alpha * (reward + (self.discount * self.getValue(nextState)) - self.getQValue(state, next)))
 
         else:
             previous = state.previousState.location
-            self.QValues[(previous,current,next)] = ((1-self.alpha)*self.getQValue(state,nextState.location))+ \
-                                                    self.alpha*(reward+self.discount*self.getValue(nextState))
+            self.QValues[(previous,current,next)] = ((1-alpha)*self.getQValue(state,nextState.location))+ \
+                                                    alpha*(reward+self.discount*self.getValue(nextState))
         mdp.state = state
 
     def observeTransition(self, environment,state, action, deltaReward):
@@ -137,7 +139,16 @@ class ratAgent():
         return not self.isInTraining()
 
     def explorationProb(self,agent,state):
-        if self.epsilon == 'greedy':
-            return explore.greedyE(agent,state)
         if self.epsilon == 'decreasing':
             return explore.decreasingE(agent,state)
+        if self.epsilon == 'glie':
+            return explore.GLIE(agent,state)
+        else: return explore.greedyE(agent,state)
+
+    def alpha(self,agent,state):
+        if self.alpha == 'linear':
+            return learning.decreasingLinear(agent,state)
+        if self.alpha == 'exponential':
+            return learning.decreasingExponential(agent,state)
+        else:
+            return self.alpha
