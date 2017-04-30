@@ -40,6 +40,15 @@ def raw_data():
 def func(x, a, b, c):
     return a * np.exp(-b * x) + c
 
+def rat_data():
+    with open('rat1027.txt', 'r') as old:
+        lines = old.readlines()
+        oldDecisions = lines.split(',')
+    with open('rat10282.txt', 'r') as young:
+        lines = young.readlines()
+        youngDecisions = lines.split(',')
+    return (youngDecisions,oldDecisions)
+
 
 def plot_results(proportions,trialNum,movAvg):
     """
