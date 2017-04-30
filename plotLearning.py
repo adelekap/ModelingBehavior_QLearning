@@ -50,7 +50,7 @@ def rat_data():
     return (young[0:trials],old[0:trials])
 
 
-def plot_results(proportions,trialNum,movAvg,young=None,old=None):
+def plot_results(proportions,trialNum,movAvg,alpha,epsilon):
     """
     Plots the performance of the agent to learn the W-track spatial alternation task.
     This is a simple 3 degree polynomial fit by first performing a least squares
@@ -87,7 +87,7 @@ def plot_results(proportions,trialNum,movAvg,young=None,old=None):
     agent = plt.plot(new_x,new_y,'-')
     young = plt.plot(newYoungX,newYoungY,'-')
     old = plt.plot(newOldX,newOldY,'-')
-    plt.setp(agent, linewidth=3, color='purple',label='agent')
+    plt.setp(agent, linewidth=3, color='purple',label='agent:\nalpha={0}\nepsilon={1}'.format(alpha,epsilon))
     plt.setp(young, linewidth=3, color='green',label='young')
     plt.setp(old, linewidth=3, color='orange',label='old')
     plt.axis([1,len(oldX),0,1.1])
@@ -98,10 +98,11 @@ def plot_results(proportions,trialNum,movAvg,young=None,old=None):
     plt.xlabel("Cumulative Count of Trials")
     plt.ylabel("Proportion Correct")
     plt.savefig(figureName)
-    plt.close()
+    # plt.close()
+    plt.show()
 
-def plot():
+def plot(alpha,epsilon):
     props,trials = prep_data(1)
-    plot_results(props,trials,1)
+    plot_results(props,trials,1,alpha,epsilon)
 
 

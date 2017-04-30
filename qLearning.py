@@ -125,4 +125,10 @@ with open('decisions.txt','w') as fi:
             print
             print
 
-learn.plot()
+if parameters['e'] == 'decreasing':
+    eps = 'Decreasing Linearly'
+if parameters['e'] == 'softmax':
+    eps = 'Softmax'
+else:
+    eps = str(parameters['e'])
+learn.plot(str(rat.alpha),eps)
