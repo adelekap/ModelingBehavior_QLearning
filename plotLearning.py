@@ -1,11 +1,8 @@
 import matplotlib.pyplot as plt
-from scipy.interpolate import interp1d
-import scipy
 import numpy as np
-from scipy.optimize import curve_fit
 
 
-def prep_data(movAvg,ratdata=None):
+def prep_data(movAvg):
     """
     Calculates proportions for the trace.
     """
@@ -41,11 +38,11 @@ def func(x, a, b, c):
     return a * np.exp(-b * x) + c
 
 def rat_data():
-    with open('rat10279.txt', 'r') as old:
+    with open('rat10282.txt', 'r') as old:
         lines = old.readlines()
         oldDecisions = [line.split(',') for line in lines][0]
         old = [float(o) for o in oldDecisions]
-    with open('rat10282.txt', 'r') as young:
+    with open('rat10279.txt', 'r') as young:
         lines = young.readlines()
         youngDecisions = [line.split(',') for line in lines][0]
         young = [float(y) for y in youngDecisions]
