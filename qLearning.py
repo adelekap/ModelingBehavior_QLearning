@@ -28,6 +28,8 @@ def parseArgs(cl):
             args['e'] = 'decreasing'
         if cl[n] == '-eSoftmax':
             args['e'] = 'softmax'
+        if cl[n] == '-eGlie':
+            args['e'] = 'glie'
         if cl[n] == '-a': #alpha
             args['a'] == float(cl[n+1])
     return args
@@ -129,6 +131,8 @@ if parameters['e'] == 'decreasing':
     eps = 'Decreasing Linearly'
 if parameters['e'] == 'softmax':
     eps = 'Softmax'
+if parameters['e'] == 'glie':
+    eps = 'GLIE'
 else:
     eps = str(parameters['e'])
 learn.plot(str(rat.alpha),eps)

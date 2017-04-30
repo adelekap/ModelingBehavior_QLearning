@@ -26,6 +26,13 @@ def decreasingE(agent,state):
     b = 1-.0499
     return m*x+b
 
+def GLIE(agent,state):
+    """
+    Greedy in the limit of infinite exploration (GLIE):
+    Chooses random action 1/t of the time
+    """
+    time = float(agent.episodesSoFar)*100.0+float(state.trial)
+    return (1.0/time)
 
 def softmax(agent,state):
     """
@@ -40,17 +47,22 @@ def softmax(agent,state):
      in the limit as T-->0, the best action is always chosen.
      The value returned by using decreasing-epsilon is used for
      the temperature.
+
+     This is much more variable and maxes out (this is why we cap at prob 1)
     """
     acts = util.Counter()
-    T = decreasingE(agent,state)
+    T = abs(decreasingE(agent,state))
     legalActions = agent.legalActions(state)
 
     for a in legalActions:
         q = agent.getQValue(state,a[6:8])
 
-        numerator = math.e **(q/T)
-        denominator = sum([(math.e**((agent.getQValue(state,action[6:8]))/T)) for action in legalActions])
-        acts[a] = numerator/denominator
+        try:
+            numerator = math.e **(q/T)
+            denominator = sum([(math.e**((agent.getQValue(state,action[6:8]))/T)) for action in legalActions])
+            acts[a] = numerator/denominator
+        except OverflowError as e:
+            acts[a] = 1.0
 
     maxVal = acts[acts.argMax()]
     actions = [act for act in legalActions if acts[act] == maxVal]
