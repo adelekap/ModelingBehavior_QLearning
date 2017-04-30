@@ -94,7 +94,7 @@ class ratAgent():
 
         current = state.location
         next = nextState.location
-        alpha = self.alpha(agent,state)
+        alpha = float(self.getAlpha(self,state))
 
         if state.previousState == None:
             self.QValues[(None,current,next)] = self.getQValue(state, next) + (
@@ -145,10 +145,10 @@ class ratAgent():
             return explore.GLIE(agent,state)
         else: return explore.greedyE(agent,state)
 
-    def alpha(self,agent,state):
+    def getAlpha(self,agent,state):
         if self.alpha == 'linear':
             return learning.decreasingLinear(agent,state)
         if self.alpha == 'exponential':
             return learning.decreasingExponential(agent,state)
-        else:
-            return self.alpha
+        if 'constant' in self.alpha:
+            return learning.constant(agent,state)

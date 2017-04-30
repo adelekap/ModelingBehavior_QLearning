@@ -23,7 +23,7 @@ def parseArgs(cl):
         if cl[n] == '-d': #discount
             args['d'] = float(cl[n+1])
         if cl[n] == '-eGreedy':
-            args['e'] = float(cl[n+1])
+            args['e'] = 'greedy'+cl[n+1]
         if cl[n] == '-eDecreasing':
             args['e'] = 'decreasing'
         if cl[n] == '-eSoftmax':
@@ -31,7 +31,7 @@ def parseArgs(cl):
         if cl[n] == '-eGlie':
             args['e'] = 'glie'
         if cl[n] == '-aConstant': #alpha
-            args['a'] == float(cl[n+1])
+            args['a'] = 'constant'+cl[n+1]
         if cl[n] == '-aLinear':
             args['a'] = 'linear'
         if cl[n] == '-aExponential':
@@ -137,5 +137,12 @@ if parameters['e'] == 'softmax':
 if parameters['e'] == 'glie':
     eps = 'GLIE'
 else:
-    eps = str(parameters['e'])
-learn.plot(str(rat.alpha),eps)
+    eps = '{0} {1}'.format(parameters['e'][0:6],parameters['e'][6:])
+
+if 'constant' in parameters['a']:
+    alp = parameters['a'][8:]
+if parameters['a'] == 'linear':
+    alp = 'Decreasing Linearly'
+if parameters['a'] == 'exponential':
+    alp = 'Decreasing Exponentially'
+learn.plot(alp,eps)

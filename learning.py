@@ -4,8 +4,7 @@ agent can utilize.
 """
 
 def constant(agent,state):
-    return agent.alpha
-
+    return agent.alpha[8:]
 
 
 def decreasingLinear(agent,state):
