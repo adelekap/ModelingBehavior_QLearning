@@ -2,6 +2,7 @@ import MDP
 import sys
 import agent
 import plotLearning as learn
+import exploration as explore
 
 """
 Main Module for Modeling W-Maze MDP with Q Learning
@@ -10,7 +11,7 @@ Main Module for Modeling W-Maze MDP with Q Learning
 args = sys.argv[1:]
 
 def parseArgs(cl):
-    args = {'r':-0.01,'e':.1,'a':0.9,'i':20}
+    args = {'r':-1,'e':0.1,'a':0.75,'i':20}
     for n in range(len(cl)):
         if cl[n] == '-h':
             print ""   #### NEED TO HAVE HELP STATEMENTS
@@ -21,8 +22,12 @@ def parseArgs(cl):
             args['i'] = int(cl[n+1])
         if cl[n] == '-d': #discount
             args['d'] = float(cl[n+1])
-        if cl[n] == '-e': #epsilon
+        if cl[n] == '-eGreedy':
             args['e'] = float(cl[n+1])
+        if cl[n] == '-eDecreasing':
+            args['e'] = 'decreasing'
+        if cl[n] == '-eSoftmax':
+            args['e'] = 'softmax'
         if cl[n] == '-a': #alpha
             args['a'] == float(cl[n+1])
     return args
@@ -31,7 +36,7 @@ def parseArgs(cl):
 def testRat(rat,state,sess,trial,sessionNum):
     if sess.termination(state):
         return state
-    action = rat.getAction(state)
+    action = rat.getAction(state,rat)
     newState = sess.nextState(state,action)
     rat.update(sess,state,action,sess.reward(newState))
     finalstate = testRat(rat,newState,sess,trial+1,sessionNum)
@@ -62,7 +67,7 @@ def runEpisode(agent, environment,episode,f):
     while True:
 
         state = environment.state
-        action = rat.getAction(state)
+        action = agent.getAction(state,agent)
 
         # END IF IN A TERMINAL STATE
         actions = agent.legalActions(state)

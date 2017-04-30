@@ -1,12 +1,15 @@
 import math
+import util
+import random
 
-def greedyE(agent):
+
+def greedyE(agent,state):
     """
     Implements greedy-epsilon exploration
     which returns a fixed exploration probability
     that the user can specify or the default is 0.1
     """
-    return agent.epsilon
+    return 0.1
 
 
 def decreasingE(agent,state):
@@ -18,7 +21,7 @@ def decreasingE(agent,state):
     episodes = float(agent.episodesSoFar)
     trials = float(state.trial)
 
-    x = 100.0*episodes-100.0
+    x = 100.0*episodes+trials
     m = -.0005
     b = 1-.0499
     return m*x+b
@@ -31,21 +34,26 @@ def softmax(agent,state):
      by ranking the value-function estimates using
      the Boltzmann distribution.
 
-     (eQ[s,a]/τ)/(∑a eQ[s,a]/τ)
-
      T = temperature; a high temperature causes all actions
      to be nearly equiprobable. As the temperature is reduced,
      the highest-valued actions are more likely to be chosen and,
-     in the limit as τ→0, the best action is always chosen.
+     in the limit as T-->0, the best action is always chosen.
      The value returned by using decreasing-epsilon is used for
      the temperature.
     """
-
+    acts = util.Counter()
     T = decreasingE(agent,state)
     legalActions = agent.legalActions(state)
-    q = agent.getQValue(state.previousState,state.location)
-    numerator = math.e **(q/T)
-    denominator = sum([math.e ** ((agent.getQValue(state,action[6:8]) for action in legalActions)/T)])
-    return numerator/denominator
+
+    for a in legalActions:
+        q = agent.getQValue(state,a[6:8])
+
+        numerator = math.e **(q/T)
+        denominator = sum([(math.e**((agent.getQValue(state,action[6:8]))/T)) for action in legalActions])
+        acts[a] = numerator/denominator
+
+    maxVal = acts[acts.argMax()]
+    actions = [act for act in legalActions if acts[act] == maxVal]
+    return random.choice(actions)
 
 

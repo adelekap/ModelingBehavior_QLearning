@@ -2,9 +2,13 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 import scipy
 import numpy as np
+from scipy.optimize import curve_fit
 
 
 def prep_data(movAvg):
+    """
+    Calculates proportions for the trace.
+    """
     with open('decisions.txt','r') as f:
         lines = f.readlines()
     data = [line.split(',') for line in lines][0]
@@ -27,8 +31,22 @@ def prep_data(movAvg):
             sum = 0
     return (proportions, len(data))
 
+def raw_data():
+    with open('decisions.txt','r') as f:
+        lines = f.readlines()
+    data = [line.split(',') for line in lines][0]
+    return (data,range(1,len(data)+1))
+
+def func(x, a, b, c):
+    return a * np.exp(-b * x) + c
+
 
 def plot_results(proportions,trialNum,movAvg):
+    """
+    Plots the performance of the agent to learn the W-track spatial alternation task.
+    This is a simple 3 degree polynomial fit by first performing a least squares
+    polynomial fit and the second calculates the new points.
+    """
     trials = range(0,trialNum,movAvg)
     figureName = 'LearningCurve.png'
     plt.figure('Learning Curve')
@@ -36,23 +54,23 @@ def plot_results(proportions,trialNum,movAvg):
     x = trials
     y = proportions
 
-    points = zip(x, y)
-    points = sorted(points, key=lambda point: point[0])
-    x1, y1 = zip(*points)
-    new_length = 25
-    new_x = np.linspace(min(x1), max(x1), new_length)
-    new_y = interp1d(x1, y1, kind='cubic')(new_x)
+    z = np.polyfit(x, y, 3)
+    f = np.poly1d(z)
+
+    new_x = np.linspace(x[0], x[-1], 50)
+    new_y = f(new_x)
 
     line = plt.plot(new_x,new_y,'-')
     plt.setp(line, linewidth=3, color='purple')
     plt.axis([1,trialNum,0,1.1])
     plt.title('Learning Curve')
     plt.xlabel("Cumulative Count of Trials")
-    plt.ylabel("Proportion Correct in " + str(movAvg) + "-trial moving window")
+    plt.ylabel("Proportion Correct")
     plt.savefig(figureName)
     plt.close()
 
 def plot():
-    props,trials = prep_data(10)
-    plot_results(props,trials,10)
+    props,trials = prep_data(1)
+    plot_results(props,trials,1)
+
 

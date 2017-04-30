@@ -1,5 +1,6 @@
 import util
 import random
+import exploration as explore
 
 
 class ratAgent():
@@ -48,11 +49,15 @@ class ratAgent():
 
         return max(values)
 
-    def getPolicy(self,state,legalActions):
+    def getPolicy(self,state,legalActions,softmax=False,agent=None):
         """
         Returns the best action to take in a given state
         """
+        if softmax:
+            return explore.softmax(agent,state)
+
         Qs = util.Counter()
+
         for action in legalActions:
             Qs[action] = self.getQValue(state,action[6:8])
 
@@ -60,16 +65,20 @@ class ratAgent():
         actions = [action for action in legalActions if Qs[action] == maxVal]
         return random.choice(actions)
 
-    def getAction(self,state):
+    def getAction(self,state,agent):
         """
         Computes the action to take in the current state, taking into account
         the exploration probability
         """
         legalActions = self.legalActions(state)
         action = None
-        explorationProb = self.epsilon
+        explorationProb = self.explorationProb(agent,state)
+
 
         if len(legalActions) != 0:
+            if self.epsilon == 'softmax':
+                action = self.getPolicy(state,legalActions,True,agent)
+                return action
             if util.flipCoin(explorationProb):
                 action = random.choice(legalActions)
             else:
@@ -126,3 +135,9 @@ class ratAgent():
 
     def isInTesting(self):
         return not self.isInTraining()
+
+    def explorationProb(self,agent,state):
+        if self.epsilon == 'greedy':
+            return explore.greedyE(agent,state)
+        if self.epsilon == 'decreasing':
+            return explore.decreasingE(agent,state)
