@@ -105,46 +105,28 @@ def plot_results(proportions,trialNum,movAvg,alpha,epsilon,discount):
     plt.show()
 
 
-def plot_avg(proportions,trials,movAvg,alpha,epsilon,discount):
-    trials = range(0, trials, movAvg)
+def plot_avg(proportions,trialNum,movAvg,alpha,epsilon,discount):
+    trials = range(0, trialNum, movAvg)
     figureName = 'LearningCurveMovAvg.png'
     plt.figure('Learning Curve')
 
-    new_length = 25
     #young
-    youngY = prep_data(movAvg,rat_data()[0])
-    youngX = range(1,len(youngY)+1)
-    youngPoints = zip(youngX,youngY)
-    youngPoints = sorted(youngPoints, key=lambda point: point[0])
-    youngX1, youngY1 = zip(*youngPoints)
-    new_youngx = np.linspace(min(youngX1), max(youngX1), new_length)
-    new_youngy = interp1d(youngX1, youngY1, kind='cubic')(new_youngx)
+    youngY = prep_data(movAvg,rat_data()[0])[0]
 
     #old
-    oldY = prep_data(movAvg,rat_data()[1])
-    oldX = range(1,len(oldY)+1)
-    oldPoints = zip(oldX, oldY)
-    oldPoints = sorted(oldPoints, key=lambda point: point[0])
-    oldX1, oldY1 = zip(*oldPoints)
-    new_oldx = np.linspace(min(oldX1), max(oldX1), new_length)
-    new_oldy = interp1d(oldX1, oldY1, kind='cubic')(new_oldx)
+    oldY = prep_data(movAvg,rat_data()[1])[0]
 
     #agent
-    x = range(1,len(oldY)+1)
-    y = proportions
-    points = zip(x, y)
-    points = sorted(points, key=lambda point: point[0])
-    x1, y1 = zip(*points)
-    new_x = np.linspace(min(x1), max(x1), new_length)
-    new_y = interp1d(x1, y1, kind='cubic')(new_x)
+    y = proportions[0:len(oldY)]
 
-    agent = plt.plot(new_x, new_y, '-')
-    young = plt.plot(new_youngx, new_youngy, '-')
-    old = plt.plot(new_oldx, new_oldy, '-')
+    agent = plt.plot(trials, y, '-')
+    young = plt.plot(trials, youngY, '-')
+    old = plt.plot(trials, oldY, '-')
     plt.setp(agent, linewidth=3, color='purple',
              label='agent:\nalpha={0}\nepsilon={1}\ngamma={2}'.format(alpha, epsilon, discount))
     plt.setp(young, linewidth=3, color='green', label='young')
     plt.setp(old, linewidth=3, color='orange', label='old')
+    plt.axis([1.0, 1100.0, 0, 1.1])
     plt.title('Learning Curve')
     plt.xlabel("Cumulative Count of Trials")
     plt.ylabel("Proportion Correct in " + str(movAvg) + "-trial moving window")
