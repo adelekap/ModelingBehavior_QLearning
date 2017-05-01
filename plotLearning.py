@@ -50,7 +50,7 @@ def rat_data():
     return (young[0:trials],old[0:trials])
 
 
-def plot_results(proportions,trialNum,movAvg,alpha,epsilon):
+def plot_results(proportions,trialNum,movAvg,alpha,epsilon,discount):
     """
     Plots the performance of the agent to learn the W-track spatial alternation task.
     This is a simple 3 degree polynomial fit by first performing a least squares
@@ -63,7 +63,7 @@ def plot_results(proportions,trialNum,movAvg,alpha,epsilon):
     #young rat
     youngY = rat_data()[0]
     youngX = trials[0:len(youngY)]
-    youngZ = np.polyfit(youngX,youngY,3)
+    youngZ = np.polyfit(youngX,youngY,4)
     youngf= np.poly1d(youngZ)
     newYoungX = np.linspace(youngX[0],youngX[-1],50)
     newYoungY = youngf(newYoungX)
@@ -71,7 +71,7 @@ def plot_results(proportions,trialNum,movAvg,alpha,epsilon):
     #old rat
     oldY = rat_data()[1]
     oldX = trials[0:len(oldY)]
-    oldZ = np.polyfit(oldX,oldY,3)
+    oldZ = np.polyfit(oldX,oldY,4)
     oldf = np.poly1d(oldZ)
     newOldX = np.linspace(oldX[0],oldX[-1],50)
     newOldY = oldf(newOldX)
@@ -79,7 +79,7 @@ def plot_results(proportions,trialNum,movAvg,alpha,epsilon):
     # agent
     x = trials[0:len(oldY)]
     y = proportions[0:len(oldY)]
-    z = np.polyfit(x, y,3)
+    z = np.polyfit(x, y,4)
     f = np.poly1d(z)
     new_x = np.linspace(x[0], x[-1], 50)
     new_y = f(new_x)
@@ -87,7 +87,7 @@ def plot_results(proportions,trialNum,movAvg,alpha,epsilon):
     agent = plt.plot(new_x,new_y,'-')
     young = plt.plot(newYoungX,newYoungY,'-')
     old = plt.plot(newOldX,newOldY,'-')
-    plt.setp(agent, linewidth=3, color='purple',label='agent:\nalpha={0}\nepsilon={1}'.format(alpha,epsilon))
+    plt.setp(agent, linewidth=3, color='purple',label='agent:\nalpha={0}\nepsilon={1}\ngamma={2}'.format(alpha,epsilon,discount))
     plt.setp(young, linewidth=3, color='green',label='young')
     plt.setp(old, linewidth=3, color='orange',label='old')
     plt.axis([1,len(oldX),0,1.1])
@@ -101,8 +101,12 @@ def plot_results(proportions,trialNum,movAvg,alpha,epsilon):
     # plt.close()
     plt.show()
 
-def plot(alpha,epsilon):
+def plot(alpha,epsilon,discount):
     props,trials = prep_data(1)
-    plot_results(props,trials,1,alpha,epsilon)
+    plot_results(props,trials,1,alpha,epsilon,discount)
+
+def movAvg(alpha,epsilon,discount):
+    props,trials = prep_data(10)
+    plot_results(props,trials,10,alpha,epsilon,discount)
 
 
