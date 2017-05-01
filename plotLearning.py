@@ -63,7 +63,7 @@ def plot_results(proportions,trialNum,movAvg,alpha,epsilon):
     #young rat
     youngY = rat_data()[0]
     youngX = trials[0:len(youngY)]
-    youngZ = np.polyfit(youngX,youngY,5)
+    youngZ = np.polyfit(youngX,youngY,3)
     youngf= np.poly1d(youngZ)
     newYoungX = np.linspace(youngX[0],youngX[-1],50)
     newYoungY = youngf(newYoungX)
@@ -71,7 +71,7 @@ def plot_results(proportions,trialNum,movAvg,alpha,epsilon):
     #old rat
     oldY = rat_data()[1]
     oldX = trials[0:len(oldY)]
-    oldZ = np.polyfit(oldX,oldY,5)
+    oldZ = np.polyfit(oldX,oldY,3)
     oldf = np.poly1d(oldZ)
     newOldX = np.linspace(oldX[0],oldX[-1],50)
     newOldY = oldf(newOldX)
@@ -79,7 +79,7 @@ def plot_results(proportions,trialNum,movAvg,alpha,epsilon):
     # agent
     x = trials[0:len(oldY)]
     y = proportions[0:len(oldY)]
-    z = np.polyfit(x, y,5)
+    z = np.polyfit(x, y,3)
     f = np.poly1d(z)
     new_x = np.linspace(x[0], x[-1], 50)
     new_y = f(new_x)

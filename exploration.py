@@ -29,6 +29,14 @@ def decreasingE(agent,state):
     b = 1-.0499
     return m*x+b
 
+def decExponential(agent,state):
+    """
+    Implements a decreasing-epsilon method
+    which starts with a high exploration rate
+    and then decreases exponentially with time
+    """
+    return (0.5 ** (agent.episodesSoFar + state.trial))
+
 
 def GLIE(agent,state):
     """

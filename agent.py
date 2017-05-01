@@ -2,10 +2,11 @@ import util
 import random
 import exploration as explore
 import learning
+import discount
 
 
 class ratAgent():
-    def __init__(self, mdp, epsilon, alpha, discount =0.8,numTraining = 14):
+    def __init__(self, mdp, epsilon, alpha, discount ,numTraining = 14):
         self.mdp = mdp
         self.discount = discount
         self.QValues = util.Counter()
@@ -95,15 +96,16 @@ class ratAgent():
         current = state.location
         next = nextState.location
         alpha = float(self.getAlpha(self,state))
+        discount = self.getGamma(self,state)
 
         if state.previousState == None:
             self.QValues[(None,current,next)] = self.getQValue(state, next) + (
-                alpha * (reward + (self.discount * self.getValue(nextState)) - self.getQValue(state, next)))
+                alpha * (reward + (discount * self.getValue(nextState)) - self.getQValue(state, next)))
 
         else:
             previous = state.previousState.location
             self.QValues[(previous,current,next)] = ((1-alpha)*self.getQValue(state,nextState.location))+ \
-                                                    alpha*(reward+self.discount*self.getValue(nextState))
+                                                    alpha*(reward+discount*self.getValue(nextState))
         mdp.state = state
 
     def observeTransition(self, environment,state, action, deltaReward):
@@ -139,8 +141,10 @@ class ratAgent():
         return not self.isInTraining()
 
     def explorationProb(self,agent,state):
-        if self.epsilon == 'decreasing':
+        if self.epsilon == 'linear':
             return explore.decreasingE(agent,state)
+        if self.epsilon == 'exponential':
+            return explore.decExponential(agent,state)
         if self.epsilon == 'glie':
             return explore.GLIE(agent,state)
         else: return explore.greedyE(agent,state)
@@ -152,3 +156,11 @@ class ratAgent():
             return learning.decreasingExponential(agent,state)
         if 'constant' in self.alpha:
             return learning.constant(agent,state)
+
+    def getGamma(self,agent,state):
+        if self.discount == 'linear':
+            return discount.increasingLinear(agent,state)
+        if self.discount == 'quick':
+            return discount.increasingQuickly(agent,state)
+        if 'constant' in self.discount:
+            return float(discount.constant(agent,state))

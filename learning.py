@@ -1,6 +1,7 @@
 """
 Theses are the learning functions that your
 agent can utilize.
+Returns the value of alpha.
 """
 
 def constant(agent,state):
@@ -9,7 +10,6 @@ def constant(agent,state):
 
 def decreasingLinear(agent,state):
     return (1/(agent.episodesSoFar+state.trial))
-
 
 
 def decreasingExponential(agent,state):

@@ -2,7 +2,6 @@ import MDP
 import sys
 import agent
 import plotLearning as learn
-import exploration as explore
 
 """
 Main Module for Modeling W-Maze MDP with Q Learning
@@ -11,7 +10,7 @@ Main Module for Modeling W-Maze MDP with Q Learning
 args = sys.argv[1:]
 
 def parseArgs(cl):
-    args = {'r':-1,'e':0.1,'a':0.75,'i':20}
+    args = {'r':-1,'e':'greedy0.1','a':'constant0.5','i':20,'d':'constant0.7'}
     for n in range(len(cl)):
         if cl[n] == '-h':
             print ""   #### NEED TO HAVE HELP STATEMENTS
@@ -20,12 +19,18 @@ def parseArgs(cl):
             args['r'] = float(cl[n+1])
         if cl[n] == '-i': #iterations
             args['i'] = int(cl[n+1])
-        if cl[n] == '-d': #discount
-            args['d'] = float(cl[n+1])
+        if cl[n] == '-dConstant': #discount
+            args['d'] = 'constant' + cl[n+1]
+        if cl[n] == '-dLinear':
+            args['d'] = 'linear'
+        if cl[n] == 'dQuick':
+            args['d'] = 'quick'
         if cl[n] == '-eGreedy':
             args['e'] = 'greedy'+cl[n+1]
-        if cl[n] == '-eDecreasing':
-            args['e'] = 'decreasing'
+        if cl[n] == '-eLinear':
+            args['e'] = 'linear'
+        if cl[n] == '-eExponential':
+            args['e'] = 'exponential'
         if cl[n] == '-eSoftmax':
             args['e'] = 'softmax'
         if cl[n] == '-eGlie':
@@ -103,13 +108,14 @@ def runEpisode(agent, environment,episode,f):
 
 
         returns += reward * totalDiscount
-        totalDiscount *= discount
+        gamma = agent.getGamma(agent,state)
+        totalDiscount *= gamma
         environment.state = nextState
 
 
 parameters = parseArgs(sys.argv[1:])
 environment = MDP.WMazeMDP(parameters['r'])
-rat = agent.ratAgent(environment,parameters['e'],parameters['a'])
+rat = agent.ratAgent(environment,parameters['e'],parameters['a'],parameters['d'])
 startState= MDP.State('f2',1,0,0,None,0)
 iterations = parameters['i']
 
@@ -130,8 +136,10 @@ with open('decisions.txt','w') as fi:
             print
             print
 
-if parameters['e'] == 'decreasing':
+if parameters['e'] == 'linear':
     eps = 'Decreasing Linearly'
+if parameters['e'] == 'exponential':
+    eps = 'Decreasing Exponentially'
 if parameters['e'] == 'softmax':
     eps = 'Softmax'
 if parameters['e'] == 'glie':
