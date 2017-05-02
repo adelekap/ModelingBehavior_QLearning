@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7b827965-c468-433d-8f82-df2efc614d16" name="Default" comment="" />
+    <list default="true" id="7b827965-c468-433d-8f82-df2efc614d16" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MDP.py" afterPath="$PROJECT_DIR$/MDP.py" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,7 +23,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="qLearning.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="qLearning.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/qLearning.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-840">
@@ -29,6 +31,16 @@
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MDP.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MDP.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="48" lean-forward="false" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="48" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -68,7 +80,6 @@
         <option value="$PROJECT_DIR$/util.py" />
         <option value="$PROJECT_DIR$/../../ReinforcementLearning/qlearningAgents.py" />
         <option value="$PROJECT_DIR$/learningRate.py" />
-        <option value="$PROJECT_DIR$/MDP.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/learning.py" />
         <option value="$PROJECT_DIR$/exploration.py" />
@@ -79,6 +90,7 @@
         <option value="$PROJECT_DIR$/plotLearning.py" />
         <option value="$PROJECT_DIR$/args.py" />
         <option value="$PROJECT_DIR$/qLearning.py" />
+        <option value="$PROJECT_DIR$/MDP.py" />
       </list>
     </option>
   </component>
@@ -817,14 +829,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MDP.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1380">
-          <caret line="92" column="25" lean-forward="false" selection-start-line="92" selection-start-column="25" selection-end-line="92" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/discount.py" />
     <entry file="file:///Library/Python/2.7/site-packages/matplotlib-override/matplotlib/axes/_base.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -914,6 +918,14 @@
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MDP.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="48" lean-forward="false" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="48" />
+          <folding />
         </state>
       </provider>
     </entry>

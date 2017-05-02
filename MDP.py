@@ -1,3 +1,8 @@
+"""
+This module contains information about how states are representated
+ as well as defines the Markov Decision Process.
+"""
+
 
 class State():
     def __init__(self,location,trial,correctOutbound,correctInbound,previousState,cumReward):
@@ -15,7 +20,6 @@ class WMazeMDP():
         self.actions = ['go_to_f1','go_to_f2','go_to_f3']
         self.penalty = noReward
         self.state = state
-
 
     def nextState(self,state,action):
         newreward = state.cumReward + self.penalty
