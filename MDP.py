@@ -13,7 +13,7 @@ class State():
         self.previousState = previousState
         self.cumReward = cumReward
 
-startState = State('f2',1,0,0,None,0)
+startState = State('f2',1,0,0,None,0)  # The start state is always the same regardless of the episode
 
 class WMazeMDP():
     def __init__(self,noReward,state=startState):
@@ -22,6 +22,9 @@ class WMazeMDP():
         self.state = state
 
     def nextState(self,state,action):
+        """
+        Returns what the next state will be given some state and an action.
+        """
         newreward = state.cumReward + self.penalty
         if state.location == 'f1':
             if action == 'go_to_f2':
@@ -115,6 +118,10 @@ class WMazeMDP():
         return state.correctOutbound == 30
 
     def reset(self):
+        """
+        This resets the state back to its original settings at the
+        start of an episode.
+        """
         self.state = startState
 
 

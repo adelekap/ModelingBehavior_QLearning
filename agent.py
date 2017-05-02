@@ -18,6 +18,10 @@ class ratAgent():
         self.accumTestRewards = 0.0
 
     def legalActions(self,state):
+        """
+        Returns all the possible legal actions the agent
+        can take in a particular state.
+        """
         if state.correctOutbound == 30:
             return []
         if state.location == 'f1':
@@ -40,6 +44,7 @@ class ratAgent():
             if (state.previousState.location,state.location,newLoc) not in self.QValues: return 0
             return self.QValues[(state.previousState.location,state.location,newLoc)]
 
+
     def getValue(self,state):
         """
         Returns V - the max action value over all legal actions
@@ -50,6 +55,7 @@ class ratAgent():
         values = [self.getQValue(state,action[6:8]) for action in legalActions]
 
         return max(values)
+
 
     def getPolicy(self,state,legalActions,softmax=False,agent=None):
         """
@@ -67,10 +73,11 @@ class ratAgent():
         actions = [action for action in legalActions if Qs[action] == maxVal]
         return random.choice(actions)
 
+
     def getAction(self,state,agent):
         """
         Computes the action to take in the current state, taking into account
-        the exploration probability
+        the exploration probability (or function)
         """
         legalActions = self.legalActions(state)
         action = None
@@ -86,6 +93,7 @@ class ratAgent():
             else:
                 action = self.getPolicy(state,legalActions)
         return action
+
 
     def update(self,mdp,state,action,reward):
         """
@@ -108,9 +116,11 @@ class ratAgent():
                                                     alpha*(reward+discount*self.getValue(nextState))
         mdp.state = state
 
+
     def observeTransition(self, environment,state, action, deltaReward):
         self.episodeRewards += deltaReward
         self.update(environment,state,action,deltaReward)
+
 
     def startEpisode(self):
         """
@@ -119,6 +129,7 @@ class ratAgent():
         self.lastState = None
         self.lastAction = None
         self.episodeRewards = 0.0
+
 
     def stopEpisode(self):
         """
@@ -134,13 +145,19 @@ class ratAgent():
             self.epsilon = 0.0  # no exploration
             self.alpha = 0.0  # no learning
 
+
     def isInTraining(self):
         return self.episodesSoFar < self.numTraining
+
 
     def isInTesting(self):
         return not self.isInTraining()
 
+
     def explorationProb(self,agent,state):
+        """
+        Returns the epsilon value at the time step.
+        """
         if self.epsilon == 'linear':
             return explore.decreasingE(agent,state)
         if self.epsilon == 'exponential':
@@ -149,7 +166,11 @@ class ratAgent():
             return explore.GLIE(agent,state)
         else: return explore.greedyE(agent,state)
 
+
     def getAlpha(self,agent,state):
+        """
+        Returns the alpha value at that time step.
+        """
         if self.alpha == 'linear':
             return learning.decreasingLinear(agent,state)
         if self.alpha == 'exponential':
@@ -157,7 +178,11 @@ class ratAgent():
         if 'constant' in self.alpha:
             return learning.constant(agent,state)
 
+
     def getGamma(self,agent,state):
+        """
+        Returns the gamma (discount) value at that time step.
+        """
         if self.discount == 'linear':
             return discount.increasingLinear(agent,state)
         if self.discount == 'quick':
