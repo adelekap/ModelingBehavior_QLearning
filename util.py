@@ -2,6 +2,12 @@ import sys
 import inspect
 import heapq, random
 
+"""
+Functions and classes contained here were taken from util.py
+in INFO550's Reinforcement Learning Assignment:
+http://w3.sista.arizona.edu/~clayton/courses/ai/projects/reinforcement/docs/util.html
+"""
+
 class Counter(dict):
     """
     A counter keeps track of counts for a set of keys.
