@@ -4,16 +4,19 @@ def parseArgs(cl):
     args = {'r':-1,'e':'greedy0.1','a':'constant0.5','i':15,'d':'constant0.7','p':'movAvg'}
     for n in range(len(cl)):
         if cl[n] == '-h':
-            print ""   #### NEED TO HAVE HELP STATEMENTS
+            print ""
             sys.exit()
-        if cl[n] == '-i': #iterations
+        ### ITERATIONS ###################
+        if cl[n] == '-i':
             args['i'] = int(cl[n+1])
-        if cl[n] == '-dConstant': #discount
+        ### GAMMA / DISCOUNT #############
+        if cl[n] == '-dConstant':
             args['d'] = 'constant' + cl[n+1]
         if cl[n] == '-dLinear':
             args['d'] = 'linear'
         if cl[n] == '-dQuick':
             args['d'] = 'quick'
+        ### EPSILON ######################
         if cl[n] == '-eGreedy':
             args['e'] = 'greedy'+cl[n+1]
         if cl[n] == '-eLinear':
@@ -24,12 +27,14 @@ def parseArgs(cl):
             args['e'] = 'softmax'
         if cl[n] == '-eGlie':
             args['e'] = 'glie'
-        if cl[n] == '-aConstant': #alpha
+        ### ALPHA #########################
+        if cl[n] == '-aConstant':
             args['a'] = 'constant'+cl[n+1]
         if cl[n] == '-aLinear':
             args['a'] = 'linear'
         if cl[n] == '-aExponential':
             args['a'] = 'exponential'
+        ### PLOT OPTION ###################
         if cl[n] == '-movAvg':
             args['p'] = 'movAvg'
         if cl[n] == '-polynomial':
@@ -48,7 +53,7 @@ def eps(parameters):
     if parameters['e'] == 'glie':
         return 'GLIE'
     else:
-        return '{0} {1}'.format(parameters['e'][0:6], parameters['e'][6:])
+        return parameters['e'][6:]
 
 def alp(parameters):
     if 'constant' in parameters['a']:

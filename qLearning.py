@@ -92,7 +92,7 @@ alp = args.alp(parameters)
 dis = args.dis(parameters)
 
 
-if parameters['p'] == 'polynomial':
-    learn.plot(alp,eps,dis)
+# if parameters['p'] == 'polynomial':
+#     learn.plot(alp,eps,dis)
 if parameters['p'] == 'movAvg':
     learn.movAvg(alp,eps,dis)

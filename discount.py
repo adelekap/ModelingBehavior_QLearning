@@ -14,7 +14,6 @@ def increasingLinear(agent,state):
     """
     Increases discount linearly with time
     """
-    print (1.0 - (1.0 / (agent.episodesSoFar + state.trial)))
     return (1.0 - (1.0 / (agent.episodesSoFar + state.trial)))
 
 

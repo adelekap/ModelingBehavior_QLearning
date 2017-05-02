@@ -110,14 +110,21 @@ def plot_avg(proportions,trialNum,movAvg,alpha,epsilon,discount):
     plt.figure('Learning Curve')
 
     #young
-    youngY = prep_data(movAvg,rat_data()[0])[0][0:1201]
+    youngY_raw = prep_data(movAvg,rat_data()[0])[0][0:1201]
 
     #old
-    oldY = prep_data(movAvg,rat_data()[1])[0][0:1201]
+    oldY_raw = prep_data(movAvg,rat_data()[1])[0][0:1201]
 
     #agent
-    y = proportions[0:len(oldY)]
+    y_raw = proportions[0:len(oldY_raw)]
 
+    minTrials = min([len(youngY_raw),len(oldY_raw),len(y_raw)])
+    youngY = youngY_raw[0:minTrials]
+    oldY = oldY_raw[0:minTrials]
+    y = y_raw[0:minTrials]
+    youngY[0] = 0.5
+    oldY[0] = 0.5
+    y[0] = 0.5
     trials = range(0, trialNum, movAvg)[0:len(oldY)]
 
     agent = plt.plot(trials, y, '-')
@@ -127,7 +134,10 @@ def plot_avg(proportions,trialNum,movAvg,alpha,epsilon,discount):
              label='agent:(alpha={0}, epsilon={1}, gamma={2})'.format(alpha, epsilon, discount))
     plt.setp(young, linewidth=3, color='green', label='young')
     plt.setp(old, linewidth=3, color='orange', label='old')
-    plt.axis([1.0, 1100.0, 0, 1.1])
+    if minTrials < 100:
+        plt.axis([1.0, 800.0, 0, 1.1])
+    else:
+        plt.axis([1.0, 1100.0, 0, 1.1])
     plt.title('Learning Curve')
     lgd = plt.legend(loc=3)
     plt.xlabel("Cumulative Count of Trials")
@@ -143,7 +153,7 @@ def plot(alpha,epsilon,discount):
 
 
 def movAvg(alpha,epsilon,discount):
-    props,trials = prep_data(60)
-    plot_avg(props,1200,60,alpha,epsilon,discount)
+    props,trials = prep_data(50)
+    plot_avg(props,1200,50,alpha,epsilon,discount)
 
 
