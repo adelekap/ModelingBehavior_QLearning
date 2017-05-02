@@ -5,32 +5,8 @@ import plotLearning as learn
 import args
 
 """
-Main Module for Modeling W-Maze MDP with Q Learning
+Main Module for Modeling W-Maze MDP with Q Learning.
 """
-
-def testRat(rat,state,sess,trial,sessionNum):
-    if sess.termination(state):
-        return state
-    action = rat.getAction(state,rat)
-    newState = sess.nextState(state,action)
-    rat.update(sess,state,action,sess.reward(newState))
-    finalstate = testRat(rat,newState,sess,trial+1,sessionNum)
-    return finalstate
-
-
-def testing(rat,sessionNum,start):
-    performance = testRat(rat, start, environment, 1, sessionNum)
-
-    if sessionNum == iterations:
-        print 'Session {0} Performance:{1}%'.format(sessionNum, ((float(performance.correctOutbound) +
-                                                                  float(performance.correctInbound)) /
-                                                                 float(performance.trial)) * 100)
-    else:
-        print 'Session {0} Performance:{1}%'.format(sessionNum, ((float(performance.correctOutbound) +
-                                                                  float(performance.correctInbound)) /
-                                                                 float(performance.trial)) * 100)
-        testing(rat,sessionNum+1,MDP.State('f2',1,0,0,None,performance.cumReward))
-
 
 def runEpisode(agent, environment,episode,f):
     """
