@@ -106,31 +106,34 @@ def plot_results(proportions,trialNum,movAvg,alpha,epsilon,discount):
 
 
 def plot_avg(proportions,trialNum,movAvg,alpha,epsilon,discount):
-    trials = range(0, trialNum, movAvg)
     figureName = 'LearningCurveMovAvg.png'
     plt.figure('Learning Curve')
 
     #young
-    youngY = prep_data(movAvg,rat_data()[0])[0]
+    youngY = prep_data(movAvg,rat_data()[0])[0][0:1201]
 
     #old
-    oldY = prep_data(movAvg,rat_data()[1])[0]
+    oldY = prep_data(movAvg,rat_data()[1])[0][0:1201]
 
     #agent
     y = proportions[0:len(oldY)]
+
+    trials = range(0, trialNum, movAvg)[0:len(oldY)]
 
     agent = plt.plot(trials, y, '-')
     young = plt.plot(trials, youngY, '-')
     old = plt.plot(trials, oldY, '-')
     plt.setp(agent, linewidth=3, color='purple',
-             label='agent:\nalpha={0}\nepsilon={1}\ngamma={2}'.format(alpha, epsilon, discount))
+             label='agent:(alpha={0}, epsilon={1}, gamma={2})'.format(alpha, epsilon, discount))
     plt.setp(young, linewidth=3, color='green', label='young')
     plt.setp(old, linewidth=3, color='orange', label='old')
     plt.axis([1.0, 1100.0, 0, 1.1])
     plt.title('Learning Curve')
+    lgd = plt.legend(loc=3)
     plt.xlabel("Cumulative Count of Trials")
     plt.ylabel("Proportion Correct in " + str(movAvg) + "-trial moving window")
     plt.savefig(figureName)
+    plt.show()
 
 
 def plot(alpha,epsilon,discount):
@@ -140,7 +143,7 @@ def plot(alpha,epsilon,discount):
 
 
 def movAvg(alpha,epsilon,discount):
-    props,trials = prep_data(50)
-    plot_avg(props,trials,50,alpha,epsilon,discount)
+    props,trials = prep_data(60)
+    plot_avg(props,1200,60,alpha,epsilon,discount)
 
 

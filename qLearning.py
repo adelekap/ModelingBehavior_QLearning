@@ -10,7 +10,7 @@ Main Module for Modeling W-Maze MDP with Q Learning
 args = sys.argv[1:]
 
 def parseArgs(cl):
-    args = {'r':-1,'e':'greedy0.1','a':'constant0.5','i':20,'d':'constant0.7','p':'polynomial'}
+    args = {'r':-1,'e':'greedy0.1','a':'constant0.5','i':15,'d':'constant0.7','p':'polynomial'}
     for n in range(len(cl)):
         if cl[n] == '-h':
             print ""   #### NEED TO HAVE HELP STATEMENTS
@@ -23,7 +23,7 @@ def parseArgs(cl):
             args['d'] = 'constant' + cl[n+1]
         if cl[n] == '-dLinear':
             args['d'] = 'linear'
-        if cl[n] == 'dQuick':
+        if cl[n] == '-dQuick':
             args['d'] = 'quick'
         if cl[n] == '-eGreedy':
             args['e'] = 'greedy'+cl[n+1]
