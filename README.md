@@ -3,4 +3,4 @@ This codebase includes a description of a common spatial alternation task (Frank
 
 Two example rat datasets are provided as txt files. There are both response files (positions that the animal visited on the maze) and decision files (indicating whether the animal made the correct or incorrect decision at that moment). 
 
-![Alt text](ModelingBehavior_QLearning/Untitled.jpg?raw=true "Arguments")
+![Alt text](/adelekap/ModelingBehavior_QLearning/blob/master/Untitled.jpg?raw=true "Arguments")
