@@ -25,13 +25,13 @@ class animalMDP(MDP.WMazeMDP):
         if state.location == 'f2':
             if action == 'go_to_f3':
                 st = State('f3',state.trial+1,state.correctOutbound+1,state.correctInbound,state,newreward+1)
-                if self.reward(st,self.ratData) == 1:
+                if self.reward(st,self.ratData,action) == 1:
                     return st
                 else:
                     return State('f3',state.trial+1,state.correctOutbound,state.correctInbound,state,newreward)
             if action == 'go_to_f1':
                 st = State('f1',state.trial+1,state.correctOutbound+1,state.correctInbound,state,newreward+1)
-                if self.reward(st,self.ratData) == 1:
+                if self.reward(st,self.ratData,action) == 1:
                     return st
                 else:
                     return State('f1',state.trial+1,state.correctOutbound,state.correctInbound,state,newreward)
@@ -41,44 +41,20 @@ class animalMDP(MDP.WMazeMDP):
             if action == 'go_to_f2':
                 return State('f2',state.trial+1,state.correctOutbound,state.correctInbound+1,state,newreward+1)
 
-    def reward(self,state,animalData):
+    def reward(self,state,animalData,action):
         """
         This is the reward function. It returns the reward the agent experiences when in that state.
         The agent receives a reward if they visit the same feeder as the animal given in the arguments.
         """
         trialIndex = state.trial - 1
-        if len(animalData) <= trialIndex:
-            print 'o'
-        if state.previousState.previousState == None:
+        feeder = action[7]
+
+        if feeder == '1' and animalData[trialIndex] == 1:
             return 1
-
-        distant = state.previousState.previousState.location
-        past = state.previousState.location
-        current = state.location
-
-        if current == 'f2' and (past == 'f1' or past == 'f3'):
-            if state.previousState.previousState.previousState == None:
-                if animalData[trialIndex] == 1:
-                    return 1
-                else: return -1
-            farfar = state.previousState.previousState.previousState.location
-            if (farfar == past):
-                if animalData[trialIndex] == 0:
-                    return -1
-                else:
-                    return 1
-
-        if current == 'f3' and past == 'f2' and distant == 'f1':
-            if animalData[trialIndex] == 1:
-                return 1
-            else:
-                return -1
-
-        if current == 'f1' and past == 'f2' and distant == 'f3':
-            if animalData[trialIndex] == 1:
-                return 1
-            else:
-                return -1
+        if feeder == '2' and animalData[trialIndex] == 2:
+            return 1
+        if feeder == '3' and animalData[trialIndex] == 3:
+            return 1
         return -1
 
 

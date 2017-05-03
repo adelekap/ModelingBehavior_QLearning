@@ -78,7 +78,7 @@ class WMazeMDP():
             else:
                 return 0
 
-    def reward(self,state,animalData=None):
+    def reward(self,state,animalData=None,action=None):
         """
         This is the reward function. It returns the reward the agent experiences when in that state.
         The agent receives a reward if they visit a correct feeder in the sequence,
