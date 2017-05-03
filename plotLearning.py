@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.interpolate import interp1d
 
 
 def prep_data(movAvg,ratData=None):
@@ -138,8 +137,8 @@ def plot_avg(proportions,trialNum,movAvg,alpha,epsilon,discount):
         plt.axis([1.0, 800.0, 0, 1.1])
     else:
         plt.axis([1.0, 1100.0, 0, 1.1])
+    plt.legend(loc=3)
     plt.title('Learning Curve')
-    lgd = plt.legend(loc=3)
     plt.xlabel("Cumulative Count of Trials")
     plt.ylabel("Proportion Correct in " + str(movAvg) + "-trial moving window")
     plt.savefig(figureName)

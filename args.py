@@ -45,9 +45,9 @@ def parseArgs(cl):
 
 def eps(parameters):
     if parameters['e'] == 'linear':
-        return 'Decreasing Linearly'
+        return '-Linear'
     if parameters['e'] == 'exponential':
-        return 'Decreasing Exponentially'
+        return '-Exponential'
     if parameters['e'] == 'softmax':
         return 'Softmax'
     if parameters['e'] == 'glie':
@@ -59,14 +59,14 @@ def alp(parameters):
     if 'constant' in parameters['a']:
         return parameters['a'][8:]
     if parameters['a'] == 'linear':
-        return 'Decreasing Linearly'
+        return '-Linear'
     if parameters['a'] == 'exponential':
-        return 'Decreasing Exponentially'
+        return '-Exponential'
 
 def dis(parameters):
     if parameters['d'] == 'linear':
-        return 'Decreasing Linearly'
+        return '-Linear'
     if parameters['d'] == 'quick':
-        return 'Decreasing x/(x+1)'
+        return 'x/(x+1)'
     if 'constant' in parameters['d']:
         return parameters['d'][8:]
