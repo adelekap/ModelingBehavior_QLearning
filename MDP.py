@@ -110,7 +110,7 @@ class WMazeMDP():
         else:
             return self.penalty
 
-    def termination(self,state):
+    def termination(self,state,trials=None):
         """
         This returns whether or not the agent is in a terminal state.
         The only termination state is when the agent reaches 30 correct outbound decisions.

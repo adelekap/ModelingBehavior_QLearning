@@ -19,7 +19,7 @@ def oldData():
     return [int(num) for num in data]
 
 
-def runEpisode(agent, environment,episode,f,animalData):
+def runEpisode(agent, environment,episode,f,animalData,trials,test):
     """
     Runs a single episode and documents the behavior of the
     agent in decisions.txt.
@@ -35,10 +35,9 @@ def runEpisode(agent, environment,episode,f,animalData):
         action = agent.getAction(state,agent)
 
         # END IF IN A TERMINAL STATE
-        actions = agent.legalActions(state)
-        if len(actions) == 0:
+        if environment.termination(state,trials):
             print("EPISODE " + str(episode) + " COMPLETE: RETURN WAS " + str(returns) + "\n")
-            f.write('1')
+            if test: f.write('1')
             rat.accumTrainRewards=returns
             return returns
 
@@ -50,10 +49,11 @@ def runEpisode(agent, environment,episode,f,animalData):
         nextState = environment.nextState(state,action)
         reward = environment.reward(nextState,animalData,action)
 
-        if reward == 1:
-            f.write('1,')
-        else:
-            f.write('0,')
+        if test:
+            if reward == 1:
+                f.write('1,')
+            else:
+                f.write('0,')
 
         # UPDATE LEARNER
         if 'observeTransition' in dir(agent):
@@ -78,25 +78,34 @@ if parameters['m'] == 'young':
 environment = animalMDP.animalMDP(data)
 rat = agent.ratAgent(environment,parameters['e'],parameters['a'],parameters['d'])
 startState= MDP.State('f2',1,0,0,None,0)
-iterations = parameters['i']
+iterations = 100
+
 
 
 with open('decisions.txt','w') as fi:
     fi.write('0,')
-
     if iterations > 0:
         print
         print "RUNNING", iterations, "EPISODES"
         print
     returns = 0
-    for episode in range(1, iterations+1):
-        returns += runEpisode(rat,environment,episode,fi,data)
-        rat.episodesSoFar += 1
-        if iterations > 0:
-            print
-            print "AVERAGE RETURNS FROM START STATE: "+str((returns+0.0) / iterations)
-            print
-            print
+    for episode in range(iterations):
+        if episode == iterations - 1:
+            returns += runEpisode(rat,environment,episode,fi,data,len(data),True)
+            rat.episodesSoFar += 1
+            if iterations > 0:
+                print
+                print "AVERAGE RETURNS FROM START STATE: "+str((returns+0.0) / iterations)
+                print
+                print
+        else:
+            returns += runEpisode(rat,environment,episode,fi,data,len(data),False)
+            rat.episodesSoFar += 1
+            if iterations > 0:
+                print
+                print "AVERAGE RETURNS FROM START STATE: "+str((returns+0.0) / iterations)
+                print
+                print
 
 
 ######################################################

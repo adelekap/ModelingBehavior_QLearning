@@ -73,7 +73,9 @@ def softmax(agent,state):
         try:
             numerator = math.e **(q/T)
             denominator = sum([(math.e**((agent.getQValue(state,action[6:8]))/T)) for action in legalActions])
-            acts[a] = numerator/denominator
+            if denominator == 0:
+                acts[a] = 0
+            else: acts[a] = numerator/denominator
         except OverflowError as e:
             acts[a] = 1.0
 

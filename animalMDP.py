@@ -57,6 +57,12 @@ class animalMDP(MDP.WMazeMDP):
             return 1
         return -1
 
+    def termination(self,state,trials):
+        """
+        This returns whether or not the agent is in a terminal state.
+        The only termination state is when the agent reaches 30 correct outbound decisions.
+        """
+        return state.trial == trials
 
 
 

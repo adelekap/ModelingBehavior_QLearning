@@ -22,8 +22,8 @@ class ratAgent():
         Returns all the possible legal actions the agent
         can take in a particular state.
         """
-        if state.correctOutbound == 30:
-            return []
+        # if state.correctOutbound == 30:
+        #     return []
         if state.location == 'f1':
             return ['go_to_f2','go_to_f3']
         if state.location == 'f2':

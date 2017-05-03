@@ -24,8 +24,7 @@ def runEpisode(agent, environment,episode,f):
         action = agent.getAction(state,agent)
 
         # END IF IN A TERMINAL STATE
-        actions = agent.legalActions(state)
-        if len(actions) == 0:
+        if environment.termination(state):
             print("EPISODE " + str(episode) + " COMPLETE: RETURN WAS " + str(returns) + "\n")
             f.write('1')
             rat.accumTrainRewards=returns
