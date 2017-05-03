@@ -16,7 +16,7 @@ class State():
 startState = State('f2',1,0,0,None,0)  # The start state is always the same regardless of the episode
 
 class WMazeMDP():
-    def __init__(self,noReward,state=startState):
+    def __init__(self,noReward=-1,state=startState):
         self.actions = ['go_to_f1','go_to_f2','go_to_f3']
         self.penalty = noReward
         self.state = state
@@ -78,7 +78,7 @@ class WMazeMDP():
             else:
                 return 0
 
-    def reward(self,state):
+    def reward(self,state,animalData=None):
         """
         This is the reward function. It returns the reward the agent experiences when in that state.
         The agent receives a reward if they visit a correct feeder in the sequence,

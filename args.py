@@ -1,7 +1,7 @@
 import sys
 
 def parseArgs(cl):
-    args = {'r':-1,'e':'greedy0.1','a':'constant0.5','i':15,'d':'constant0.7','p':'movAvg'}
+    args = {'r':-1,'e':'greedy0.1','a':'constant0.5','i':15,'d':'constant0.7','p':'movAvg','m':'young'}
     for n in range(len(cl)):
         if cl[n] == '-h':
             print ""
@@ -39,6 +39,11 @@ def parseArgs(cl):
             args['p'] = 'movAvg'
         if cl[n] == '-polynomial':
             args['p'] = 'polynomial'
+        ### ANIMAL COMPARISON #############
+        if cl[n] == '-mdpYoung':
+            args['m'] = 'young'
+        if cl[n] == '-mdpOld':
+            args['m'] = 'old'
 
     return args
 
