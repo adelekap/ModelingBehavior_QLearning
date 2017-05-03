@@ -9,5 +9,5 @@ To run the q-learning algorithm, just run:  `python qLearning.py`
 
 ![alt tag](https://github.com/adelekap/ModelingBehavior_QLearning/blob/master/Untitled.jpg)
 
-This project was written as part of the requirements to complete Univeristy of Arizona'a INFO550 Artificial Intelligence course.
+This project was written as part of the requirements to complete University of Arizona's INFO550 Artificial Intelligence course.
 Some of the functions/classes included in this project are modified versions from class homework files: http://w3.sista.arizona.edu/~clayton/courses/ai/projects/reinforcement/reinforcement.html
